@@ -207,11 +207,20 @@ class LuxCrawler():
 
 if __name__ == "__main__":
     s_time = time.time()
+    queries = []
+    with open(QUERIES_TO_SEARCH_PATH, 'r') as queries_fp:
+        queries = queries_fp.readlines()
+
     lux_crawler = LuxCrawler(max_link_cnt=MAX_LINK_CNT)
     print("LuxCrawler initiated. Starting the sign in...")
     lux_crawler.sign_in(username=USER_ID, password=PASSWORD)
     print("Sign in completed. Starting the searches")
-    lux_crawler.search_n_dl_reports("Robotics")
+    for query in queries[1:]:
+        s_time = time.time()
+        query = query.strip()
+        print("Searching for keyword \"{}\"".format(query))
+        lux_crawler.search_n_dl_reports(query)
+        print("Finished downloading for \"{}\" in {}".format(query, time.time() - s_time))
 
     print("Finished what I wanted to do. Closing now..")
     driver.close()

@@ -1,4 +1,4 @@
 USER_ID = # enter your username here
 PASSWORD = # enter your password here
 MAX_LINK_CNT = # enter how many results you want returned with a single search
-
+QUERIES_TO_SEARCH_PATH = "queries_to_search.txt" # enter the path to the queries file
