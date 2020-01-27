@@ -29,7 +29,7 @@ class LuxCrawler():
         Initializes the settings that LuxCrawler will run on
         '''
         self.max_link_cnt = max_link_cnt
-        self.dl_path = os.path.join("lux_downloads") if dl_path is None else dl_path
+        self.dl_path = DEFAULT_DL_PATH if dl_path is None else dl_path
         if not os.path.exists(self.dl_path):
             print("Directory not found. Making one now at {}".format(self.dl_path))
             os.mkdir(self.dl_path)
@@ -210,7 +210,6 @@ if __name__ == "__main__":
     queries = []
     with open(QUERIES_TO_SEARCH_PATH, 'r') as queries_fp:
         queries = queries_fp.readlines()
-
     lux_crawler = LuxCrawler(max_link_cnt=MAX_LINK_CNT)
     print("LuxCrawler initiated. Starting the sign in...")
     lux_crawler.sign_in(username=USER_ID, password=PASSWORD)
@@ -220,7 +219,19 @@ if __name__ == "__main__":
         query = query.strip()
         print("Searching for keyword \"{}\"".format(query))
         lux_crawler.search_n_dl_reports(query)
-        print("Finished downloading for \"{}\" in {}".format(query, time.time() - s_time))
+        print("Finished downloading for \"{}\" in {} seconds".format(query, time.time() - s_time))
+
+        # Copy all into directory
+        storage_path = os.path.join(lux_crawler.dl_path, query)
+        if not os.path.exists(storage_path):
+            print("Making directory {} for to store query results...".format(storage_path))
+            os.mkdir(storage_path)
+        for file in os.listdir(lux_crawler.dl_path):
+            if os.path.isfile(os.path.join(lux_crawler.dl_path, file)) and '.pdf' in file:
+                os.rename(os.path.join(lux_crawler.dl_path, file),
+                    os.path.join(lux_crawler.dl_path, query, file))
+        print("Relocated to relevant directories for easy reference")
+
 
     print("Finished what I wanted to do. Closing now..")
     driver.close()

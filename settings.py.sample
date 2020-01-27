@@ -1,4 +1,7 @@
+import os
+
 USER_ID = # enter your username here
 PASSWORD = # enter your password here
 MAX_LINK_CNT = # enter how many results you want returned with a single search
+DEFAULT_DL_PATH = os.path.join(os.getcwd(), "lux_downloads") # enter preferred default download path
 QUERIES_TO_SEARCH_PATH = "queries_to_search.txt" # enter the path to the queries file
