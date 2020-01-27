@@ -203,6 +203,11 @@ class LuxCrawler():
             if c.get_attribute("text") == "Download PDF":
                 print("Found download button. Downloading now...")
                 c.click()
+
+
+    def close(self):
+        print("Finished Lux Crawler's instructions. Closing now..")
+        self._driver.close()
                 
 
 if __name__ == "__main__":
@@ -232,8 +237,4 @@ if __name__ == "__main__":
                     os.path.join(lux_crawler.dl_path, query, file))
         print("Relocated to relevant directories for easy reference")
 
-
-    print("Finished what I wanted to do. Closing now..")
-    driver.close()
-
-    print("Total execution time: {}".format(time.time() - s_time))
+    lux_crawler.close()
