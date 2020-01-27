@@ -1,0 +1,4 @@
+USER_ID = # enter your username here
+PASSWORD = # enter your password here
+MAX_LINK_CNT = # enter how many results you want returned with a single search
+
