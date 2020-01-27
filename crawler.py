@@ -211,11 +211,16 @@ class LuxCrawler():
                 
 
 if __name__ == "__main__":
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--headless", help="Run crawler in headless mode", action="store_true")
+    args = parser.parse_args()
+
     s_time = time.time()
     queries = []
     with open(QUERIES_TO_SEARCH_PATH, 'r') as queries_fp:
         queries = queries_fp.readlines()
-    lux_crawler = LuxCrawler(max_link_cnt=MAX_LINK_CNT)
+    lux_crawler = LuxCrawler(max_link_cnt=MAX_LINK_CNT, is_headless=args.headless)
     print("LuxCrawler initiated. Starting the sign in...")
     lux_crawler.sign_in(username=USER_ID, password=PASSWORD)
     print("Sign in completed. Starting the searches")
